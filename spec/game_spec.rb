@@ -65,5 +65,12 @@ describe Game do
 				})
 			end
 		end
+
+		context 'Possible Moves vertically' do
+
+			xit 'same tests as horizontal but vertical' do
+			end
+
+		end
 	end
 end
