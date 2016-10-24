@@ -31,8 +31,8 @@ class Game
 				for n in x[-1]..y[-1]
 					@p1_defense[(x[0] + n.to_s).to_sym] = 'c'
 					@p1_defense[(x[0] + n.to_s).to_sym] = 'c'
-				end
-			end
+				en
+d			end
 		else
 			if x[0] == y[0]
 				for n in x[-1]..y[-1]
