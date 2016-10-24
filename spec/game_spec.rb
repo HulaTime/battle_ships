@@ -36,7 +36,7 @@ describe Game do
 			game.start(game_board)
 		end
 
-		context 'Possible Moves' do
+		context 'Possible Moves horizontally' do
 			it 'Player 1 can move a destroyer' do
 				game.p1_move('d', 'a1', 'a2')
 				expect(game.p1_defense).to eq({

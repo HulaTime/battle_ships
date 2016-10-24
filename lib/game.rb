@@ -16,29 +16,25 @@ class Game
 	end
 
 	def p1_move(piece, x, y)
-		if piece == 'd'
-			@p1_defense[x.to_sym] = piece
-			@p1_defense[y.to_sym] = piece
-		elsif piece == 's'
-			if x[0] == y[0]
-				for n in x[-1]..y[-1]
-					@p1_defense[(x[0] + n.to_s).to_sym] = 's'
-					@p1_defense[(x[0] + n.to_s).to_sym] = 's'
-				end
-			end
-		elsif piece == 'c'
-			if x[0] == y[0]
-				for n in x[-1]..y[-1]
-					@p1_defense[(x[0] + n.to_s).to_sym] = 'c'
-					@p1_defense[(x[0] + n.to_s).to_sym] = 'c'
-				en
-d			end
-		else
-			if x[0] == y[0]
-				for n in x[-1]..y[-1]
-					@p1_defense[(x[0] + n.to_s).to_sym] = 'b'
-					@p1_defense[(x[0] + n.to_s).to_sym] = 'b'
-				end
+		place_piece(DESTROYER, x, y) if piece == DESTROYER
+		place_piece(SUBMARINE, x, y) if piece == SUBMARINE
+		place_piece(CRUISER, x, y) if piece == CRUISER
+		place_piece(BATTLESHIP, x, y) if piece == BATTLESHIP
+	end
+
+
+	private
+
+	DESTROYER = 'd'
+	SUBMARINE = 's'
+	CRUISER = 'c'
+	BATTLESHIP = 'b'
+
+	def place_piece(type, x, y)
+		if x[0] == y[0]
+			for n in x[-1]..y[-1]
+				@p1_defense[(x[0] + n.to_s).to_sym] = type
+				@p1_defense[(x[0] + n.to_s).to_sym] = type
 			end
 		end
 	end
