@@ -27,7 +27,6 @@ class GameBoard
 			end
 		end
 		@board_display += LETTER_ROW
-		puts @board_display
 	end
 
 end
