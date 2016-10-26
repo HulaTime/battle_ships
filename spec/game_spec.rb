@@ -16,6 +16,19 @@ describe Game do
 			p2: {a1:nil,a2:nil,a3:nil,a4:nil}
 		}
 
+	let(:game_board) { 
+		double :game_board,
+		  p1: {a1:nil,b1:nil,c1:nil,d1:nil,
+		  		 a2:nil,b2:nil,c2:nil,d2:nil,
+		  		 a3:nil,b3:nil,c3:nil,d3:nil,
+		  		 a4:nil,b4:nil,c4:nil,d4:nil},
+		  p2: {a1:nil,b1:nil,c1:nil,d1:nil,
+		  		 a2:nil,b2:nil,c2:nil,d2:nil,
+		  		 a3:nil,b3:nil,c3:nil,d3:nil,
+		  		 a4:nil,b4:nil,c4:nil,d4:nil}
+		}
+
+
 	let(:player_1) { 'Max' }
 	let(:player_2) { double :player_2, name: '' }
 
@@ -111,5 +124,37 @@ describe Game do
 				})
 			end
 		end
+
+		context 'Possible Moves diagonally' do
+			before do
+				game.start(game_board)
+			end
+
+			it 'Player 1 can move a destroyer' do
+				game.p1_move('d', 'a1', 'b2')
+				expect(game.p1_defense[:a1]).to eq 'd'
+				expect(game.p1_defense[:b2]).to eq 'd'
+			end
+
+			it 'Player 1 can move a submarine' do
+				game.p1_move('s', 'a1', 'd3')
+				expect(game.p1_defense[:b1]).to eq 's'
+				expect(game.p1_defense[:d3]).to eq 's'
+			end
+
+			it 'Player 1 can move a cruiser' do
+				game.p1_move('c', 'a1', 'c3')
+				expect(game.p1_defense[:a1]).to eq 'c'
+				expect(game.p1_defense[:c3]).to eq 'c'
+			end
+
+			it 'Player 1 can move a battleship' do
+				game.p1_move('b', 'a1', 'd4')
+				expect(game.p1_defense[:a1]).to eq 'b'
+				expect(game.p1_defense[:d4]).to eq 'b'
+			end
+		end
+
 	end
+
 end

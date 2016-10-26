@@ -31,15 +31,10 @@ class Game
 	BATTLESHIP = 'b'
 
 	def place_piece(type, x, y)
-		if x[0] == y[0]
-			for n in x[-1]..y[-1]
-				@p1_defense[(x[0] + n.to_s).to_sym] = type
-				@p1_defense[(x[0] + n.to_s).to_sym] = type
-			end
-		elsif x[-1] == y[-1]
+		for n in x[-1]..y[-1]
 			for l in x[0]..y[0]
-				@p1_defense[(l + x[-1]).to_sym] = type
-				@p1_defense[(l + y[-1]).to_sym] = type
+				@p1_defense[(l + n.to_s).to_sym] = type
+				@p1_defense[(l + n.to_s).to_sym] = type
 			end
 		end
 	end
