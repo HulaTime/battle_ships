@@ -9,10 +9,6 @@ So the game is more fun to play
 I would like a nice command line interface that lets me enter ship positions and shots using commands (rather than using IRB to interact with objects)
 
 As a player
-So that I can create a layout of ships to outwit my opponent
-I would like to be able to choose the directions my ships face in
-
-As a player
 So that I can have a coherent game
 I would like ships to be constrained to be on the board
 
@@ -49,3 +45,7 @@ I would like to place a ship in a board location
 As a player
 So that I can play a more interesting game
 I would like to have a range of ship sizes to choose from
+
+As a player
+So that I can create a layout of ships to outwit my opponent
+I would like to be able to choose the directions my ships face in

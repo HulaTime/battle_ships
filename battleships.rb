@@ -22,5 +22,6 @@ board = GameBoard.new
 end
 
 puts
+puts
 
 puts board.display
