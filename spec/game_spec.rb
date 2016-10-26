@@ -2,10 +2,9 @@ require 'game'
 
 describe Game do
 
-	subject(:game) { described_class.new(player_1, player_2) }
+	subject(:game) { described_class.new(player_1) }
 	
 	let(:player_1) { 'Max' }
-	let(:player_2) { double :player_2, name: '' }
 
 	game_board = {
 		a1:nil,b1:nil,c1:nil,d1:nil,
