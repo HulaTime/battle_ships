@@ -12,7 +12,7 @@ class Game
 	def start(new_board)
 		@p1_defense = new_board.p1
 		@p2_defense = new_board.p2
-		print "Welcome #{@player_1}, you move first..."
+		print "Welcome #{@player_1.name}, you move first..."
 	end
 
 	def p1_move(piece, x, y)
