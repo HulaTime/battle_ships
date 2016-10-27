@@ -2,7 +2,7 @@ class GameBoard
 
 	LETTER_ROW = " A  B  C  D  E  F  G  H  I  J"
 
-	attr_reader :p1, :p2
+	attr_reader :p1, :p2, :board
 
 	def initialize
 		@board = {}

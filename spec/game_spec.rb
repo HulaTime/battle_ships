@@ -125,6 +125,8 @@ describe Game do
 				game.move('b', 'a1', 'd4')
 				expect(game.p1_defense[:a1]).to eq 'b'
 				expect(game.p1_defense[:d4]).to eq 'b'
+				expect(game.p1_defense[:b1]).not_to eq 'b'
+				expect(game.p1_defense[:d2]).not_to eq 'b'
 			end
 		end
 	end
