@@ -15,21 +15,22 @@ class Game
 	end
 
 	def move(piece, x, y)
-		place_piece(DESTROYER, x, y) if piece == DESTROYER
-		place_piece(SUBMARINE, x, y) if piece == SUBMARINE
-		place_piece(CRUISER, x, y) if piece == CRUISER
-		place_piece(BATTLESHIP, x, y) if piece == BATTLESHIP
+		if (x[0] == y[0]) || (x.slice(1..-1) == y.slice(1..-1))
+			place_piece(piece, x, y)
+		else
+			place_piece_diagonal(piece, x, y)
+		end
 	end
 
 
-	# private
+	private
 
 	DESTROYER = 'd'
 	SUBMARINE = 's'
 	CRUISER = 'c'
 	BATTLESHIP = 'b'
 
-	def place_piece(type, x, y)
+	def place_piece_diagonal(type, x, y)
 		high_num = high_number(x.slice(1..-1).to_s, y.slice(1..-1).to_s)
 		low_num = low_number(x.slice(1..-1).to_s, y.slice(1..-1).to_s)
 		num_range = find_number_range(low_num, high_num)
