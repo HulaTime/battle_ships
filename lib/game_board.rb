@@ -2,10 +2,10 @@ class GameBoard
 
 	LETTER_ROW = " A  B  C  D  E  F  G  H  I  J"
 
-	attr_reader :p1, :p2, :board
+	attr_reader :p1, :p2, :positions
 
 	def initialize
-		@board = {}
+		@positions = {}
 		@board_display = ""
 
 		for letter in 'a'..'j'

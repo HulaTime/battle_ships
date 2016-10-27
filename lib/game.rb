@@ -28,8 +28,8 @@ class Game
 	def place_piece(type, x, y)
 		for n in x[-1]..y[-1]
 			for l in x[0]..y[0]
-				@p1_defense.board[(l + n.to_s).to_sym] = type
-				@p1_defense.board[(l + n.to_s).to_sym] = type
+				@p1_defense.positions[(l + n.to_s).to_sym] = type
+				@p1_defense.positions[(l + n.to_s).to_sym] = type
 			end
 		end
 	end
@@ -55,7 +55,7 @@ class Game
 		end
 
 		coordinates.each do |coord|
-			@p1_defense.board[coord.to_sym] = type
+			@p1_defense.positions[coord.to_sym] = type
 		end
 	end
 

@@ -6,7 +6,7 @@ describe Game do
 	
 	let(:player_1) { 'Max' }
 
-	let(:game_board) { double :game_board, board:
+	let(:game_board) { double :game_board, positions:
 		{a1:nil,b1:nil,c1:nil,d1:nil,
 		a2:nil,b2:nil,c2:nil,d2:nil,
 		a3:nil,b3:nil,c3:nil,d3:nil,
@@ -23,8 +23,8 @@ describe Game do
 
 	it 'Starting a new game generates a new board' do
 		game.start(game_board)
-		expect(game.p1_defense.board).to eq game_board.board
-		expect(game.p2_defense.board).to eq game_board.board
+		expect(game.p1_defense.positions).to eq game_board.positions
+		expect(game.p2_defense.positions).to eq game_board.positions
 	end
 
 	context 'Game started' do
@@ -36,30 +36,30 @@ describe Game do
 
 			it 'Player 1 can move a destroyer' do
 				game.move('d', 'a1', 'a2')
-				expect(game.p1_defense.board[:a1]).to eq 'd'
-				expect(game.p1_defense.board[:a2]).to eq 'd'
+				expect(game.p1_defense.positions[:a1]).to eq 'd'
+				expect(game.p1_defense.positions[:a2]).to eq 'd'
 			end
 
 			it 'Player 1 can move a submarine' do
 				game.move('s', 'a1', 'a3')
-				expect(game.p1_defense.board[:a1]).to eq 's'
-				expect(game.p1_defense.board[:a2]).to eq 's'
-				expect(game.p1_defense.board[:a3]).to eq 's'
+				expect(game.p1_defense.positions[:a1]).to eq 's'
+				expect(game.p1_defense.positions[:a2]).to eq 's'
+				expect(game.p1_defense.positions[:a3]).to eq 's'
 			end
 
 			it 'Player 1 can move a cruiser' do
 				game.move('c', 'a1', 'a3')
-				expect(game.p1_defense.board[:a1]).to eq 'c'
-				expect(game.p1_defense.board[:a2]).to eq 'c'
-				expect(game.p1_defense.board[:a3]).to eq 'c'
+				expect(game.p1_defense.positions[:a1]).to eq 'c'
+				expect(game.p1_defense.positions[:a2]).to eq 'c'
+				expect(game.p1_defense.positions[:a3]).to eq 'c'
 			end
 
 			it 'Player 1 can move a battleship' do
 				game.move('b', 'a1', 'a4')
-				expect(game.p1_defense.board[:a1]).to eq 'b'
-				expect(game.p1_defense.board[:a2]).to eq 'b'
-				expect(game.p1_defense.board[:a3]).to eq 'b'
-				expect(game.p1_defense.board[:a4]).to eq 'b'
+				expect(game.p1_defense.positions[:a1]).to eq 'b'
+				expect(game.p1_defense.positions[:a2]).to eq 'b'
+				expect(game.p1_defense.positions[:a3]).to eq 'b'
+				expect(game.p1_defense.positions[:a4]).to eq 'b'
 			end
 		end
 
@@ -70,31 +70,31 @@ describe Game do
 
 			it 'Player 1 can move a destroyer' do
 				game.move('d', 'a1', 'b1')
-				expect(game.p1_defense.board[:a1]).to eq 'd'
-				expect(game.p1_defense.board[:b1]).to eq 'd'
+				expect(game.p1_defense.positions[:a1]).to eq 'd'
+				expect(game.p1_defense.positions[:b1]).to eq 'd'
 			end
 
 			it 'Player 1 can move a submarine' do
 				game.move('s', 'a1', 'c1')
-				expect(game.p1_defense.board[:a1]).to eq 's'
-				expect(game.p1_defense.board[:b1]).to eq 's'
-				expect(game.p1_defense.board[:c1]).to eq 's'
+				expect(game.p1_defense.positions[:a1]).to eq 's'
+				expect(game.p1_defense.positions[:b1]).to eq 's'
+				expect(game.p1_defense.positions[:c1]).to eq 's'
 
 			end
 
 			it 'Player 1 can move a cruiser' do
 				game.move('c', 'a1', 'c1')
-				expect(game.p1_defense.board[:a1]).to eq 'c'
-				expect(game.p1_defense.board[:b1]).to eq 'c'
-				expect(game.p1_defense.board[:c1]).to eq 'c'
+				expect(game.p1_defense.positions[:a1]).to eq 'c'
+				expect(game.p1_defense.positions[:b1]).to eq 'c'
+				expect(game.p1_defense.positions[:c1]).to eq 'c'
 			end
 
 			it 'Player 1 can move a battleship' do
 				game.move('b', 'a1', 'd1')
-				expect(game.p1_defense.board[:a1]).to eq 'b'
-				expect(game.p1_defense.board[:b1]).to eq 'b'
-				expect(game.p1_defense.board[:c1]).to eq 'b'
-				expect(game.p1_defense.board[:d1]).to eq 'b'
+				expect(game.p1_defense.positions[:a1]).to eq 'b'
+				expect(game.p1_defense.positions[:b1]).to eq 'b'
+				expect(game.p1_defense.positions[:c1]).to eq 'b'
+				expect(game.p1_defense.positions[:d1]).to eq 'b'
 			end
 		end
 
@@ -105,28 +105,28 @@ describe Game do
 
 			it 'Player 1 can move a destroyer' do
 				game.move('d', 'a1', 'b2')
-				expect(game.p1_defense.board[:a1]).to eq 'd'
-				expect(game.p1_defense.board[:b2]).to eq 'd'
+				expect(game.p1_defense.positions[:a1]).to eq 'd'
+				expect(game.p1_defense.positions[:b2]).to eq 'd'
 			end
 
 			it 'Player 1 can move a submarine' do
 				game.move('s', 'b1', 'd3')
-				expect(game.p1_defense.board[:b1]).to eq 's'
-				expect(game.p1_defense.board[:d3]).to eq 's'
+				expect(game.p1_defense.positions[:b1]).to eq 's'
+				expect(game.p1_defense.positions[:d3]).to eq 's'
 			end
 
 			it 'Player 1 can move a cruiser' do
 				game.move('c', 'a1', 'c3')
-				expect(game.p1_defense.board[:a1]).to eq 'c'
-				expect(game.p1_defense.board[:c3]).to eq 'c'
+				expect(game.p1_defense.positions[:a1]).to eq 'c'
+				expect(game.p1_defense.positions[:c3]).to eq 'c'
 			end
 
 			it 'Player 1 can move a battleship' do
 				game.move('b', 'a1', 'd4')
-				expect(game.p1_defense.board[:a1]).to eq 'b'
-				expect(game.p1_defense.board[:d4]).to eq 'b'
-				expect(game.p1_defense.board[:b1]).not_to eq 'b'
-				expect(game.p1_defense.board[:d2]).not_to eq 'b'
+				expect(game.p1_defense.positions[:a1]).to eq 'b'
+				expect(game.p1_defense.positions[:d4]).to eq 'b'
+				expect(game.p1_defense.positions[:b1]).not_to eq 'b'
+				expect(game.p1_defense.positions[:d2]).not_to eq 'b'
 			end
 		end
 	end
