@@ -97,38 +97,6 @@ describe Game do
 				expect(game.p1_defense.positions[:d1]).to eq 'b'
 			end
 		end
-
-		context 'Possible Moves diagonally' do
-			before do
-				game.start(game_board)
-			end
-
-			it 'Player 1 can move a destroyer' do
-				game.move('d', 'a1', 'b2')
-				expect(game.p1_defense.positions[:a1]).to eq 'd'
-				expect(game.p1_defense.positions[:b2]).to eq 'd'
-			end
-
-			it 'Player 1 can move a submarine' do
-				game.move('s', 'b1', 'd3')
-				expect(game.p1_defense.positions[:b1]).to eq 's'
-				expect(game.p1_defense.positions[:d3]).to eq 's'
-			end
-
-			it 'Player 1 can move a cruiser' do
-				game.move('c', 'a1', 'c3')
-				expect(game.p1_defense.positions[:a1]).to eq 'c'
-				expect(game.p1_defense.positions[:c3]).to eq 'c'
-			end
-
-			it 'Player 1 can move a battleship' do
-				game.move('b', 'a1', 'd4')
-				expect(game.p1_defense.positions[:a1]).to eq 'b'
-				expect(game.p1_defense.positions[:d4]).to eq 'b'
-				expect(game.p1_defense.positions[:b1]).not_to eq 'b'
-				expect(game.p1_defense.positions[:d2]).not_to eq 'b'
-			end
-		end
 	end
 
 end

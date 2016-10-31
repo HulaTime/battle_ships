@@ -34,31 +34,6 @@ class Game
 		end
 	end
 
-	def place_piece_diagonal(type, x, y)
-		high_num = high_number(x.slice(1..-1).to_s, y.slice(1..-1).to_s)
-		low_num = low_number(x.slice(1..-1).to_s, y.slice(1..-1).to_s)
-		num_range = find_number_range(low_num, high_num)
-
-		high_let = high_letter(x[0], y[0])
-		low_let = low_letter(x[0], y[0])
-		let_range = find_letter_range(low_let, high_let)
-
-		count = (num_range[0].to_i - 1)
-		coordinates = []
-
-		let_range.each do |letter|			
-			count += 1
-			num_range.each do |num|
-				coord = (letter + num.to_s) if num.to_i == count
-				coordinates.push(coord) if coord != nil
-			end
-		end
-
-		coordinates.each do |coord|
-			@p1_defense.positions[coord.to_sym] = type
-		end
-	end
-
 	def high_number(x, y)
 		return x if x > y
 		return y if y > x
