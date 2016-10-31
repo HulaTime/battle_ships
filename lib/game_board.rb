@@ -2,11 +2,11 @@ class GameBoard
 
 	LETTER_ROW = " A  B  C  D  E  F  G  H  I  J"
 
-	attr_reader :positions, :board_display
+	attr_reader :positions, :display
 
 	def initialize
 		@positions = {}
-		@board_display = ""
+		@display = ""
 
 		for letter in 'a'..'j'
 			for number in 1..10
@@ -16,13 +16,17 @@ class GameBoard
 
 		row_num = 1
 		@positions.each do |position, value|
-			@board_display += "[_]" if position.length != 3
+			@display += "[_]" if position.length != 3
 			if position.length == 3
-				@board_display += "[_] #{row_num}\n"
+				@display += "[_] #{row_num}\n"
 				row_num += 1
 			end
 		end
-		@board_display += LETTER_ROW
+		@display += LETTER_ROW
+	end
+
+	def update(position, value)
+		positions[position] = value
 	end
 
 end

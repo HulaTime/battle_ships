@@ -25,7 +25,15 @@ describe GameBoard do
 		end
 
 		it 'GameBoard should have a 2D display for the user to see moves' do
-			expect(board.board_display).to eq display
+			expect(board.display).to eq display
+		end
+	end
+
+	context 'Changes' do 
+		it 'There is a method to update/change values on the board' do
+			board.update("b6", "b")
+			expect(board.positions['b6']).not_to eq 0
+			expect(board.positions['b6']).to eq 'b'
 		end
 	end
 	
