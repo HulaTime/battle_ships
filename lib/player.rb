@@ -4,12 +4,12 @@ class Player
 
 	def initialize(name)
 		@name = name
-		@attack_log = Hash.new
+		@attack_log = Array.new
 		@defense_log = Hash.new
 	end
 
-	def attack(position, piece)
-		attack_log[position.to_sym] = piece
+	def attack(position)
+		attack_log.push(position)
 	end
 
 	def defense(pos_1, pos_2, piece)
