@@ -23,10 +23,10 @@ describe Game do
 	end
 
 	it 'Game should keep track of player turn' do
-		
+		allow(Kernel).to receive(:rand) { 1 }
 		expect(game.player_turn).to eq 1
 		game.attack('a1')
-		expect(player_turn).to eq 2
+		expect(game.player_turn).to eq 2
 	end
 
 end

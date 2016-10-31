@@ -5,7 +5,7 @@ class Game
 	def initialize(player_1, player_2 = false)
 		@player_1 = player_1
 		@player_2 = player_2
-		@player_turn = rand(1..2)
+		@player_turn = Kernel.rand(1..2)
 		@p1_defense = nil
 		@p2_defense = nil
 	end
@@ -16,6 +16,7 @@ class Game
 	end
 
 	def attack(position)
+		if player_turn == 1 then @player_turn = 2 else @player_turn = 1 end
 	end
 
 
