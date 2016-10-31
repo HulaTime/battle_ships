@@ -33,42 +33,4 @@ class Game
 			end
 		end
 	end
-
-	def high_number(x, y)
-		return x if x > y
-		return y if y > x
-	end
-
-	def low_number(x, y)
-		return y if x > y
-		return x if y > x
-	end
-
-	def find_number_range(x, y)
-		range = []
-		for n in x..y
-			range.push(n)
-		end
-		return range
-	end
-
-	def high_letter(a, b)
-		return a if a > b
-		return b if a < b
-	end
-
-	def low_letter(a, b)
-		return a if a < b
-		return b if a > b
-	end
-
-	def find_letter_range(a, b)
-		range, current_letter = [], a
-		until current_letter == b.next
-			range.push(current_letter)
-			current_letter = current_letter.next
-		end
-		return range
-	end
-
 end
