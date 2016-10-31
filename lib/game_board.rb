@@ -2,7 +2,7 @@ class GameBoard
 
 	LETTER_ROW = " A  B  C  D  E  F  G  H  I  J"
 
-	attr_reader :p1, :p2, :positions
+	attr_reader :positions, :board_display
 
 	def initialize
 		@positions = {}
@@ -13,9 +13,7 @@ class GameBoard
 				@positions[letter+number.to_s] = 0
 			end
 		end
-	end
 
-	def display
 		row_num = 1
 		@positions.each do |position, value|
 			@board_display += "[_]" if position.length != 3

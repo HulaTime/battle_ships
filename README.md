@@ -2,11 +2,17 @@
 ##A battle ships game
 
 
-###To do
+###In Progress
 
 As a player
 So the game is more fun to play
 I would like a nice command line interface that lets me enter ship positions and shots using commands (rather than using IRB to interact with objects)
+
+As a player
+So that I can play against a human opponent
+I would like to play a two-player game
+
+###To do
 
 As a player
 So that I can have a coherent game
@@ -32,9 +38,6 @@ As a player
 So that I can consider my next shot
 I would like to be able to see my hits and misses so far
 
-As a player
-So that I can play against a human opponent
-I would like to play a two-player game
 
 ###Done
 
