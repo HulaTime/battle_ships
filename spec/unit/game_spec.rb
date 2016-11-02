@@ -8,13 +8,15 @@ describe Game do
 	let(:player_1) { double :player_1, name: 'Max'}
 	let(:player_2) { double :player_2, name: 'Miles'}
 
-	it 'A new game can be created with 1 player' do
-		expect(Game).to respond_to(:new).with(1).argument
-		expect(game.player_2).to eq false
-	end
+	context 'Initialization' do
+		it 'A new game can be created with 1 player' do
+			expect(Game).to respond_to(:new).with(1).argument
+			expect(game.player_2).to eq false
+		end
 
-	it 'A new game can be created with 2 players' do
-		expect(Game).to respond_to(:new).with(2).arguments
+		it 'A new game can be created with 2 players' do
+			expect(Game).to respond_to(:new).with(2).arguments
+		end
 	end
 
 	context 'Moves' do
@@ -33,6 +35,22 @@ describe Game do
 		it 'Player can set their defensive positions' do
 			game.set_defense('a1', 'a5', 'b')
 			expect(game.defense[:p1][:b]).to eq ['a1', 'a2', 'a3', 'a4', 'a5']
+		end
+	end
+
+	context 'Errors' do
+		before do
+			allow(Kernel).to receive(:rand) { 1 }
+		end
+
+		it 'Player cannot attack out of bounds' do
+			expect{game.attack('a11')}.to raise_error "Error: Out of bounds"
+			expect{game.attack('a-1')}.to raise_error "Error: Out of bounds"
+		end
+
+		it 'Player cannot place a defensive piece out of bounds' do
+			expect{game.set_defense('j1', 'k1', 'd')}.to raise_error "Error: Out of bounds"
+			expect{game.set_defense('a-1', 'a3', 'b')}.to raise_error "Error: Out of bounds"
 		end
 	end
 end

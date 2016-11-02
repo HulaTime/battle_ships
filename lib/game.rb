@@ -11,11 +11,13 @@ class Game
 	end
 
 	def attack(position)
+		error("OOB") if out_of_bounds?(position)
 		attack_log[@player_turn.to_sym].push(position)
 		change_turn_if_single_player
 	end
 
 	def set_defense(x, y, piece)
+		error("OOB") if (out_of_bounds?(x) || out_of_bounds?(y))
 		position = set_vertical_piece(x, y) if x[0] == y[0]
 		position = set_horizontal_piece(x, y) if x[0] != y[0]
 		defense[@player_turn.to_sym][piece.to_sym] = position
@@ -23,6 +25,16 @@ class Game
 	end
 
 	private
+
+	def out_of_bounds?(position)
+		if ((position[0] > 'j' || position[1..-1].to_i > 10)) then return true else false end
+		if ((position[0] < 'a' || position[1..-1].to_i < 1)) then return true else false end
+	end
+
+	def error(type = 'unknown')
+		fail "Error: Something went wrong" if type == 'unknown'
+		fail "Error: Out of bounds" if type == "OOB"
+	end
 
 	def change_turn_if_single_player
 		if @player_turn == "p1" && player_2 != false
