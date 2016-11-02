@@ -1,4 +1,5 @@
 require 'game'
+require 'byebug'
 
 describe Game do
 
@@ -44,18 +45,20 @@ describe Game do
 		end
 
 		it 'Player cannot attack out of bounds' do
-			expect{game.attack('a11')}.to raise_error "Error: Out of bounds"
-			expect{game.attack('a-1')}.to raise_error "Error: Out of bounds"
+			expect(game.attack('a11')).to eq "Error: Out of bounds"
+			expect(game.attack('a-1')).to eq "Error: Out of bounds"
 		end
 
 		it 'Player cannot place a defensive piece out of bounds' do
-			expect{game.set_defense('j1', 'k1', 'd')}.to raise_error "Error: Out of bounds"
-			expect{game.set_defense('a-1', 'a3', 'b')}.to raise_error "Error: Out of bounds"
+			expect(game.set_defense('j1', 'k1', 'd')).to eq "Error: Out of bounds"
+			expect(game.set_defense('a-1', 'a3', 'b')).to eq "Error: Out of bounds"
 		end
 
 		it 'Player cannot attack or place a piece if it overlaps' do
 			game.attack('a1')
-			expect{game.attack('a1')}.to raise_error "Error: Placement overlaps"
+			expect(game.attack('a1')).to eq "Error: Placement overlaps"
+			game.set_defense('a1', 'a5', 'b')
+			expect(game.set_defense('a1', 'a5', 'b')).to eq "Error: Placement overlaps"
 		end
 	end
 end

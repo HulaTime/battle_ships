@@ -1,28 +1,29 @@
 class Game
 
 	attr_reader :player_1, :player_2, :defense, :attack_log
+	attr_accessor :player_turn
 
 	def initialize(player_1, player_2 = false)
 		@player_1 = player_1
 		@player_2 = player_2
-		@player_turn = "p#{Kernel.rand(1..2)}"
+		@player_turn = "p#{Kernel.rand(1..2)}".to_sym
 		@defense = { p1: Hash.new, p2: Hash.new }
 		@attack_log = { p1: [], p2: [] }
 	end
 
 	def attack(position)
-		error("OOB") if out_of_bounds?(position)
-		error("Overlap") if overlap?(position)
-		attack_log[@player_turn.to_sym].push(position)
+		return error("OOB") if out_of_bounds?(position)
+		return error("Overlap") if attacked?(position)
+		attack_log[@player_turn].push(position)
 		change_turn_if_single_player
 	end
 
 	def set_defense(x, y, piece)
-		error("OOB") if (out_of_bounds?(x) || out_of_bounds?(y))
-		# error("Overlap") if overlap?(position)
+		return error("OOB") if (out_of_bounds?(x) || out_of_bounds?(y))
+		return error("Overlap") if position_occupied?(x, y)
 		position = set_vertical_piece(x, y) if x[0] == y[0]
 		position = set_horizontal_piece(x, y) if x[0] != y[0]
-		defense[@player_turn.to_sym][piece.to_sym] = position
+		defense[@player_turn][piece.to_sym] = position
 		change_turn_if_single_player
 	end
 
@@ -33,21 +34,35 @@ class Game
 		if ((position[0] < 'a' || position[1..-1].to_i < 1)) then return true end
 	end
 
-	def overlap?(position)
-		if attack_log[@player_turn.to_sym].include?(position) then return true end
+	def error(type = 'unknown')
+		return "Error: Something went wrong" if type == 'unknown'
+		return "Error: Out of bounds" if type == "OOB"
+		return "Error: Placement overlaps" if type == "Overlap"
 	end
 
-	def error(type = 'unknown')
-		raise "Error: Something went wrong" if type == 'unknown'
-		raise "Error: Out of bounds" if type == "OOB"
-		raise "Error: Placement overlaps" if type == "Overlap"
+	def attacked?(position)
+		if attack_log[@player_turn].include?(position) then return true end
+	end
+
+	def position_occupied?(x, y)
+		if x[0] == y[0] && defense[@player_turn].empty? == false
+			for n in x[1..-1].to_i..y[1..-1].to_i
+				position = x[0] +	n.to_s
+				defense[@player_turn].each do |piece, existing_positions|
+				return true if existing_positions.include?(position) end
+			end
+		elsif x[1..-1] == y[1..-1] && defense[@player_turn].empty? == false
+			for l in x[0]..y[0]
+				position = l + x[1..-1]
+				defense[@player_turn].each do |piece, existing_positions|
+				return true if existing_positions.include?(position) end
+			end
+		end
 	end
 
 	def change_turn_if_single_player
-		if @player_turn == "p1" && player_2 != false
-			@player_turn = "p2"
-		else
-			@player_turn = "p1"
+		if @player_turn == :p1 && player_2 != false
+			@player_turn = :p2
 		end
 	end
 
@@ -62,7 +77,7 @@ class Game
 	def set_horizontal_piece(x, y)
 		positions = []
 		for l in x[0]..y[0]
-			positions.push(l + x[1..-1].to_s)
+			positions.push(l + x[1..-1])
 		end
 		return positions
 	end
