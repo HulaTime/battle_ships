@@ -1,10 +1,11 @@
 require 'game'
+require 'byebug'
 
 describe Game do
 
 	subject(:game) { described_class.new(player_1) }
 	
-	let(:player_1) { 'Max' }
+	let(:player_1) { double :player_1, name: 'Max'}
 
 	let(:game_board) { double :game_board, positions:
 		{a1:nil,b1:nil,c1:nil,d1:nil,
@@ -22,11 +23,17 @@ describe Game do
 		expect(Game).to respond_to(:new).with(2).arguments
 	end
 
-	it 'Game should keep track of player turn' do
+	it 'Player cannot attack twice in a row' do
 		allow(Kernel).to receive(:rand) { 1 }
-		expect(game.player_turn).to eq 1
 		game.attack('a1')
-		expect(game.player_turn).to eq 2
+		expect(game.attack_log[:p1]).to eq ["a1"]
+		game.attack('a2')
+		expect(game.attack_log[:p1]).to eq ["a1"]
+		expect(game.attack_log[:p2]).to eq ["a2"]
 	end
 
+	it 'Player can set their defensive positions' do
+		game.set_defense('a1', 'a5', 'b')
+		expect(game.defense[:p1][:b]).to eq ['a1', 'a2', 'a3', 'a4', 'a5']
+	end
 end

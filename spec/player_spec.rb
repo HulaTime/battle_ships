@@ -14,12 +14,4 @@ describe Player do
 		expect(player_1.attack_log).to eq(['b6', 'c1'])
 	end
 
-	it 'Player should log its defensive positions' do
-		player_1.defense('a1', 'a4', 'b')
-		player_1.defense('b2', 'd2', 'd')
-		expect(player_1.ship_positions).to eq({
-			b: ['a1', 'a2', 'a3', 'a4'],
-			d: ['b2', 'c2', 'd2']
-			})
-	end
 end
