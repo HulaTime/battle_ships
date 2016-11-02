@@ -16,10 +16,6 @@ I would like to play a two-player game
 
 As a player
 So that I can have a coherent game
-I would like ships to be constrained to be on the board
-
-As a player
-So that I can have a coherent game
 I would like ships to be constrained not to overlap
 
 As a player
@@ -40,6 +36,10 @@ I would like to be able to see my hits and misses so far
 
 
 ###Done
+
+As a player
+So that I can have a coherent game
+I would like ships to be constrained to be on the board
 
 As a player
 So that I can prepare for the game

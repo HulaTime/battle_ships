@@ -12,12 +12,14 @@ class Game
 
 	def attack(position)
 		error("OOB") if out_of_bounds?(position)
+		error("Overlap") if overlap?(position)
 		attack_log[@player_turn.to_sym].push(position)
 		change_turn_if_single_player
 	end
 
 	def set_defense(x, y, piece)
 		error("OOB") if (out_of_bounds?(x) || out_of_bounds?(y))
+		# error("Overlap") if overlap?(position)
 		position = set_vertical_piece(x, y) if x[0] == y[0]
 		position = set_horizontal_piece(x, y) if x[0] != y[0]
 		defense[@player_turn.to_sym][piece.to_sym] = position
@@ -27,13 +29,18 @@ class Game
 	private
 
 	def out_of_bounds?(position)
-		if ((position[0] > 'j' || position[1..-1].to_i > 10)) then return true else false end
-		if ((position[0] < 'a' || position[1..-1].to_i < 1)) then return true else false end
+		if ((position[0] > 'j' || position[1..-1].to_i > 10)) then return true end
+		if ((position[0] < 'a' || position[1..-1].to_i < 1)) then return true end
+	end
+
+	def overlap?(position)
+		if attack_log[@player_turn.to_sym].include?(position) then return true end
 	end
 
 	def error(type = 'unknown')
-		fail "Error: Something went wrong" if type == 'unknown'
-		fail "Error: Out of bounds" if type == "OOB"
+		raise "Error: Something went wrong" if type == 'unknown'
+		raise "Error: Out of bounds" if type == "OOB"
+		raise "Error: Placement overlaps" if type == "Overlap"
 	end
 
 	def change_turn_if_single_player
