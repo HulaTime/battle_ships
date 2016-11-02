@@ -1,6 +1,6 @@
 class Game
 
-	attr_reader :player_1, :player_2, :defense, :attack_log
+	attr_reader :player_1, :player_2, :defense, :attack_log, :player_turn
 
 	def initialize(player_1, player_2 = false)
 		@player_1 = player_1
@@ -12,7 +12,7 @@ class Game
 
 	def attack(position)
 		attack_log[@player_turn.to_sym].push(position)
-		if @player_turn == "p1" then @player_turn = "p2" else @player_turn = "p1" end
+		change_turn_if_single_player
 	end
 
 	def set_defense(x, y, piece)
@@ -27,8 +27,17 @@ class Game
 			end
 		end
 		defense[@player_turn.to_sym][piece.to_sym] = positions
+		change_turn_if_single_player
 	end
 
 	private
+
+	def change_turn_if_single_player
+		if @player_turn == "p1" && player_2 != false
+			@player_turn = "p2"
+		else
+			@player_turn = "p1"
+		end
+	end
 
 end
