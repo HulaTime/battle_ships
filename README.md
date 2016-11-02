@@ -15,10 +15,6 @@ I would like to play a two-player game
 ###To do
 
 As a player
-So that I can win the game
-I would like to be able to fire at my opponent's board
-
-As a player
 So that I can refine my strategy
 I would like to know when I have sunk an opponent's ship
 
@@ -32,6 +28,10 @@ I would like to be able to see my hits and misses so far
 
 
 ###Done
+
+As a player
+So that I can win the game
+I would like to be able to fire at my opponent's board
 
 As a player
 So that I can have a coherent game
