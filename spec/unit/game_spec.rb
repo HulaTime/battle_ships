@@ -1,5 +1,4 @@
 require 'game'
-require 'byebug'
 
 describe Game do
 

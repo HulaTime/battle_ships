@@ -17,23 +17,8 @@ describe GameBoard do
 						" A  B  C  D  E  F  G  H  I  J"
 	
 	context 'Initialization' do
-		it 'GameBoard should record all board positions and values' do
-			expect(board.positions.class).to eq Hash
-			board.positions.each do |location, value|
-				expect(board.positions[location]).to eq 0
-			end
-		end
-
 		it 'GameBoard should have a 2D display for the user to see moves' do
 			expect(board.display).to eq display
-		end
-	end
-
-	context 'Changes' do 
-		it 'There is a method to update/change values on the board' do
-			board.update("b6", "b")
-			expect(board.positions['b6']).not_to eq 0
-			expect(board.positions['b6']).to eq 'b'
 		end
 	end
 	
