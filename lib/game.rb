@@ -1,7 +1,6 @@
 class Game
 
 	attr_reader :player_1, :player_2, :defense, :attack_log
-	attr_accessor :player_turn
 
 	def initialize(player_1, player_2 = false)
 		@player_1 = player_1
@@ -15,7 +14,7 @@ class Game
 		return error("OOB") if out_of_bounds?(position)
 		return error("Overlap") if attacked?(position)
 		attack_log[@player_turn].push(position)
-		change_turn_if_single_player
+		change_turn_if_multi_player
 	end
 
 	def set_defense(x, y, piece)
@@ -24,7 +23,32 @@ class Game
 		position = set_vertical_piece(x, y) if x[0] == y[0]
 		position = set_horizontal_piece(x, y) if x[0] != y[0]
 		defense[@player_turn][piece.to_sym] = position
-		change_turn_if_single_player
+		change_turn_if_multi_player
+	end
+
+	def p1_hits
+		hits = []
+		attack_log[:p1].each do |attack|
+			@defense[:p2].each do |piece, locations|
+				if locations.include?(attack)
+					hits.push(attack)
+				end
+			end
+		end
+	end
+
+	def p2_misses
+		misses = []
+		attack_log[:p2].each do |attack|
+			@defense[:p1].each do |piece, locations|
+				unless locations.include?(attack)
+					misses.push(attack)
+				end
+			end
+		end
+	end
+
+	def view_board
 	end
 
 	private
@@ -60,9 +84,9 @@ class Game
 		end
 	end
 
-	def change_turn_if_single_player
-		if @player_turn == :p1 && player_2 != false
-			@player_turn = :p2
+	def change_turn_if_multi_player
+		if @player_2 != false
+			if @player_turn == :p1 then @player_turn = :p2 else @player_turn = :p1 end
 		end
 	end
 

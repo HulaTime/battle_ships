@@ -25,7 +25,13 @@ describe Game do
 			allow(Kernel).to receive(:rand) { 1 }
 		end
 
+		it 'Player can attack' do
+			game.attack('a1')
+			expect(game.attack_log[:p1]).to eq ['a1']
+		end
+
 		it 'Player cannot attack twice in a row if two player game' do
+			# byebug
 			multi_game.attack('a1')
 			expect(multi_game.attack_log[:p1]).to eq ["a1"]
 			multi_game.attack('a2')
@@ -37,6 +43,21 @@ describe Game do
 			game.set_defense('a1', 'a5', 'b')
 			expect(game.defense[:p1][:b]).to eq ['a1', 'a2', 'a3', 'a4', 'a5']
 		end
+
+		it 'Hits and Misses are recorded' do
+			2.times {	multi_game.set_defense('a1', 'a5', 'b') }
+			multi_game.attack('a1')
+			expect(multi_game.p1_hits).to eq ['a1']
+			multi_game.attack('b1')
+			expect(multi_game.p2_misses).to eq ['b1']
+		end
+
+		# it 'Hits and Misses are recorded' do
+		# 	multi_game.set_defense('a1', 'a5', 'b')
+		# 	count = 1
+		# 	co_ord = 'a' + count 
+		# 	10.times { multi_game.attack(co_ord) }
+		# end
 	end
 
 	context 'Errors' do
