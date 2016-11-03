@@ -35,6 +35,31 @@ class Game
 				end
 			end
 		end
+		hits
+	end
+
+	def p2_hits
+		hits = []
+		attack_log[:p2].each do |attack|
+			@defense[:p1].each do |piece, locations|
+				if locations.include?(attack)
+					hits.push(attack)
+				end
+			end
+		end
+		hits
+	end
+
+	def p1_misses
+		misses = []
+		attack_log[:p1].each do |attack|
+			@defense[:p2].each do |piece, locations|
+				unless locations.include?(attack)
+					misses.push(attack)
+				end
+			end
+		end
+		misses
 	end
 
 	def p2_misses
@@ -46,6 +71,7 @@ class Game
 				end
 			end
 		end
+		misses
 	end
 
 	def view_board

@@ -44,20 +44,18 @@ describe Game do
 			expect(game.defense[:p1][:b]).to eq ['a1', 'a2', 'a3', 'a4', 'a5']
 		end
 
-		it 'Hits and Misses are recorded' do
+		it 'Player 1 Hits and Misses are recorded' do
+			# byebug
 			2.times {	multi_game.set_defense('a1', 'a5', 'b') }
 			multi_game.attack('a1')
-			expect(multi_game.p1_hits).to eq ['a1']
 			multi_game.attack('b1')
+			expect(multi_game.p1_hits).to eq ['a1']
 			expect(multi_game.p2_misses).to eq ['b1']
+			multi_game.attack('b1')
+			multi_game.attack('a1')
+			expect(multi_game.p2_hits).to eq ['a1']
+			expect(multi_game.p1_misses).to eq ['b1']
 		end
-
-		# it 'Hits and Misses are recorded' do
-		# 	multi_game.set_defense('a1', 'a5', 'b')
-		# 	count = 1
-		# 	co_ord = 'a' + count 
-		# 	10.times { multi_game.attack(co_ord) }
-		# end
 	end
 
 	context 'Errors' do
