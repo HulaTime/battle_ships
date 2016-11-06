@@ -13,23 +13,21 @@ class Game
 	def attack(position)
 		return error("OOB") if out_of_bounds?(position)
 		return error("Overlap") if attacked?(position)
-		attack_log[@player_turn].push(position)
+		attack_log[player_turn].push(position)
 		change_turn_if_multi_player
 	end
 
 	def set_defense(x, y, piece)
 		return error("OOB") if (out_of_bounds?(x) || out_of_bounds?(y))
 		return error("Overlap") if position_occupied?(x, y)
-		position = set_vertical_piece(x, y) if x[0] == y[0]
-		position = set_horizontal_piece(x, y) if x[0] != y[0]
-		defense[@player_turn][piece.to_sym] = position
+		set_piece(x, y, piece)
 		change_turn_if_multi_player
 	end
 
-	def p1_hits
+	def hits(player = player_turn.to_s)
 		hits = []
-		attack_log[:p1].each do |attack|
-			@defense[:p2].each do |piece, locations|
+		attack_log[player.to_sym].each do |attack|
+			@defense[waiting_player(player.to_sym)].each do |piece, locations|
 				if locations.include?(attack)
 					hits.push(attack)
 				end
@@ -38,34 +36,10 @@ class Game
 		hits
 	end
 
-	def p2_hits
-		hits = []
-		attack_log[:p2].each do |attack|
-			@defense[:p1].each do |piece, locations|
-				if locations.include?(attack)
-					hits.push(attack)
-				end
-			end
-		end
-		hits
-	end
-
-	def p1_misses
+	def misses(player = player_turn.to_s)
 		misses = []
-		attack_log[:p1].each do |attack|
-			@defense[:p2].each do |piece, locations|
-				unless locations.include?(attack)
-					misses.push(attack)
-				end
-			end
-		end
-		misses
-	end
-
-	def p2_misses
-		misses = []
-		attack_log[:p2].each do |attack|
-			@defense[:p1].each do |piece, locations|
+		attack_log[player.to_sym].each do |attack|
+			@defense[waiting_player(player.to_sym)].each do |piece, locations|
 				unless locations.include?(attack)
 					misses.push(attack)
 				end
@@ -79,6 +53,14 @@ class Game
 
 	private
 
+	attr_reader :player_turn
+
+	def waiting_player(current_player = player_turn)
+		current_player_num = current_player.to_s[-1].to_i
+		return :p2 if current_player_num == 1
+		return :p1 if current_player_num == 2
+	end
+
 	def out_of_bounds?(position)
 		if ((position[0] > 'j' || position[1..-1].to_i > 10)) then return true end
 		if ((position[0] < 'a' || position[1..-1].to_i < 1)) then return true end
@@ -91,45 +73,43 @@ class Game
 	end
 
 	def attacked?(position)
-		if attack_log[@player_turn].include?(position) then return true end
+		if attack_log[player_turn].include?(position) then return true end
 	end
 
 	def position_occupied?(x, y)
-		if x[0] == y[0] && defense[@player_turn].empty? == false
+		if x[0] == y[0] && defense[player_turn].empty? == false
 			for n in x[1..-1].to_i..y[1..-1].to_i
 				position = x[0] +	n.to_s
-				defense[@player_turn].each do |piece, existing_positions|
+				defense[player_turn].each do |piece, existing_positions|
 				return true if existing_positions.include?(position) end
 			end
-		elsif x[1..-1] == y[1..-1] && defense[@player_turn].empty? == false
+		elsif x[1..-1] == y[1..-1] && defense[player_turn].empty? == false
 			for l in x[0]..y[0]
 				position = l + x[1..-1]
-				defense[@player_turn].each do |piece, existing_positions|
+				defense[player_turn].each do |piece, existing_positions|
 				return true if existing_positions.include?(position) end
 			end
 		end
+	end
+
+	def set_piece(x, y, piece)
+		positions = []
+		if x[0] == y[0]
+			for n in x[1..-1].to_i..y[1..-1].to_i
+				positions.push(x[0] + n.to_s)
+			end
+		else
+			for l in x[0]..y[0]
+				positions.push(l + x[1..-1])
+			end
+		end
+		defense[player_turn][piece.to_sym] = positions
 	end
 
 	def change_turn_if_multi_player
-		if @player_2 != false
-			if @player_turn == :p1 then @player_turn = :p2 else @player_turn = :p1 end
+		if player_2 != false
+			if player_turn == :p1 then @player_turn = :p2 else @player_turn = :p1 end
 		end
-	end
-
-	def set_vertical_piece(x, y)
-		positions = []
-		for n in x[1..-1].to_i..y[1..-1].to_i
-			positions.push(x[0] + n.to_s)
-		end
-		return positions
-	end
-
-	def set_horizontal_piece(x, y)
-		positions = []
-		for l in x[0]..y[0]
-			positions.push(l + x[1..-1])
-		end
-		return positions
 	end
 
 end

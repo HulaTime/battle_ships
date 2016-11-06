@@ -31,7 +31,6 @@ describe Game do
 		end
 
 		it 'Player cannot attack twice in a row if two player game' do
-			# byebug
 			multi_game.attack('a1')
 			expect(multi_game.attack_log[:p1]).to eq ["a1"]
 			multi_game.attack('a2')
@@ -45,16 +44,15 @@ describe Game do
 		end
 
 		it 'Player 1 Hits and Misses are recorded' do
-			# byebug
 			2.times {	multi_game.set_defense('a1', 'a5', 'b') }
 			multi_game.attack('a1')
 			multi_game.attack('b1')
-			expect(multi_game.p1_hits).to eq ['a1']
-			expect(multi_game.p2_misses).to eq ['b1']
+			expect(multi_game.hits).to eq ['a1']
+			expect(multi_game.misses('p2')).to eq ['b1']
 			multi_game.attack('b1')
 			multi_game.attack('a1')
-			expect(multi_game.p2_hits).to eq ['a1']
-			expect(multi_game.p1_misses).to eq ['b1']
+			expect(multi_game.hits('p2')).to eq ['a1']
+			expect(multi_game.misses).to eq ['b1']
 		end
 	end
 
