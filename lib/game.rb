@@ -1,12 +1,13 @@
 class Game
 
-	attr_reader :player_1, :player_2, :defense, :attack_log
+	attr_reader :player_1, :player_2, :defense, :attack_log, :player_turn
 
 	def initialize(player_1, player_2 = false)
 		@player_1 = player_1
 		@player_2 = player_2
 		@player_turn = "p#{Kernel.rand(1..2)}".to_sym
 		@defense = { p1: Hash.new, p2: Hash.new }
+		generate_comp_defense if player_2 == false
 		@attack_log = { p1: [], p2: [] }
 	end
 
@@ -48,12 +49,35 @@ class Game
 		misses
 	end
 
-	def view_board
+	# private
+
+	SHIPS = {d:2, s:3, c:4, b:5}
+
+	def generate_comp_defense
+		SHIPS.each do |ship, size|
+		Kernel.rand(1..2) == 1 ? horizontal = true : horizontal = false
+		x = (('a'..'j').to_a.sample) + ((1..10).to_a.sample.to_s)
+			if horizontal == true
+				if x[1..-1].to_i <= 5
+					y = x[0] + (x[1..-1].to_i + (size - 1)).to_s
+					set_piece(x,y,ship,:p2)
+				else
+					y = x[0] + (x[1..-1].to_i - (size - 1)).to_s
+					set_piece(y,x,ship,:p2)
+				end
+			else
+				if x[0] <= 'e'
+					letter = x[0]
+					(size - 1).times { letter = (letter.ord + 1).chr }
+					set_piece(x,(letter + x[1..-1]),ship,:p2)
+				else
+					letter = x[0]
+					(size - 1).times { letter = (letter.ord - 1).chr }
+					set_piece((letter + x[1..-1]),x,ship,:p2)
+				end
+			end
+		end
 	end
-
-	private
-
-	attr_reader :player_turn
 
 	def waiting_player(current_player = player_turn)
 		current_player_num = current_player.to_s[-1].to_i
@@ -92,7 +116,7 @@ class Game
 		end
 	end
 
-	def set_piece(x, y, piece)
+	def set_piece(x, y, piece, player = player_turn)
 		positions = []
 		if x[0] == y[0]
 			for n in x[1..-1].to_i..y[1..-1].to_i
@@ -103,13 +127,21 @@ class Game
 				positions.push(l + x[1..-1])
 			end
 		end
-		defense[player_turn][piece.to_sym] = positions
+		defense[player][piece.to_sym] = positions
 	end
 
 	def change_turn_if_multi_player
 		if player_2 != false
-			if player_turn == :p1 then @player_turn = :p2 else @player_turn = :p1 end
+			player_turn == :p1 ? @player_turn = :p2 : @player_turn = :p1
 		end
 	end
 
 end
+	# positions = []
+	# 			count = initial_number.to_i
+	# 			size.times do
+	# 				position = initial_letter + count.to_s
+	# 				positions.push(position)
+	# 				count += 1
+	# 			end
+	# 				defense[:p2][ship] = positions

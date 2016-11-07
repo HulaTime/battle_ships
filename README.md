@@ -8,10 +8,6 @@ As a player
 So the game is more fun to play
 I would like a nice command line interface that lets me enter ship positions and shots using commands (rather than using IRB to interact with objects)
 
-As a player
-So that I can play against a human opponent
-I would like to play a two-player game
-
 ###To do
 
 As a player
@@ -23,6 +19,10 @@ So that I know when to finish playing
 I would like to know when I have won or lost
 
 ###Done
+
+As a player
+So that I can play against a human opponent
+I would like to play a two-player game
 
 As a player
 So that I can consider my next shot
