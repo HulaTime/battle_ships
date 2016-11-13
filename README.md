@@ -1,6 +1,7 @@
-# battle_ships
+# battle_ships (0.2)
 ##A battle ships game
 
+This is an on-going project where I will build multiple iterations of the battleships game in ruby, until I am satisfied I cannot improve it further.
 
 ###In Progress
 
